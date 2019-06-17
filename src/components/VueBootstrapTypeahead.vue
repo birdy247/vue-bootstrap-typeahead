@@ -149,6 +149,7 @@ export default {
         return
       }
       this.isFocused = false
+      this.$emit('input', newValue)
     },
 
     handleInput(newValue) {
