@@ -144,12 +144,15 @@ export default {
     },
 
     handleBlur(evt) {
-      const tgt = evt.relatedTarget
-      if (tgt && tgt.classList.contains('vbst-item')) {
-        return
-      }
-      this.isFocused = false
-      this.$emit('blur', evt)
+      setTimeout(() => {
+
+        const tgt = document.activeElement;
+        if (tgt && tgt.classList.contains('vbst-item')) {
+          return
+        }
+        this.isFocused = false
+        this.$emit('blur', evt);
+      }, 30);
     },
 
     handleInput(newValue) {
