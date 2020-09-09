@@ -144,15 +144,24 @@ export default {
     },
 
     handleBlur(evt) {
-      setTimeout(() => {
+      if(this.msieversion()){
+        setTimeout(() => {
 
-        const tgt = document.activeElement;
+          const tgt = document.activeElement;
+          if (tgt && tgt.classList.contains('vbst-item')) {
+            return
+          }
+          this.isFocused = false
+          this.$emit('blur', evt);
+        }, 30);
+      }else{
+        const tgt = evt.relatedTarget
         if (tgt && tgt.classList.contains('vbst-item')) {
           return
         }
         this.isFocused = false
-        this.$emit('blur', evt);
-      }, 30);
+        this.$emit('blur', evt)
+      }
     },
 
     handleInput(newValue) {
@@ -162,6 +171,18 @@ export default {
       if (typeof this.value !== 'undefined') {
         this.$emit('input', newValue)
       }
+    },
+    msieversion() {
+
+      var ua = window.navigator.userAgent;
+      var msie = ua.indexOf("MSIE ");
+
+      if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  // If Internet Explorer, return version number
+      {
+        return true;
+      }
+
+      return false;
     }
   },
 
